@@ -44,9 +44,8 @@ export const LoginCard = ({setType}: LoginCardProps) => {
                 </Button>
                 </div>
                 <p className="text-xs text-muted-foreground">还没有账户？
-                    <span onClick={() => {
-                        setType("register")
-                    }} className="text-sky-700 hover:underline cursor-pointer">创建一个账号</span>
+                    <span onClick={() => setType("register")}
+                          className="text-sky-700 hover:underline cursor-pointer">创建一个账号</span>
                 </p>
             </CardContent>
         </Card>
