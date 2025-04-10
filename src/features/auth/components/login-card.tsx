@@ -6,14 +6,21 @@ import {FcGoogle} from "react-icons/fc";
 import {FaGithub} from "react-icons/fa";
 import {LoginType} from "@/features/auth/types";
 import {useState} from "react";
+import {useAuthActions} from "@convex-dev/auth/react";
 
 interface LoginCardProps {
     setType: (state: LoginType) => void;
 }
 
 export const LoginCard = ({setType}: LoginCardProps) => {
+    const {signIn} = useAuthActions();
+
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+
+    const handleProviderLogin = (value: "github" | "google") => {
+        signIn(value)
+    }
 
     return (
         <Card className="w-full h-full p-8">
@@ -37,11 +44,12 @@ export const LoginCard = ({setType}: LoginCardProps) => {
                     }} variant="outline" size="lg" className="w-full relative">
                         <FcGoogle className="size-5 absolute top-2.5 left-2.5"/>
                         使用 Google 账号登录
-                    </Button><Button disabled={false} onClick={() => {
-                }} variant="outline" size="lg" className="w-full relative">
-                    <FaGithub className="size-5 absolute top-2.5 left-2.5"/>
-                    使用 Github 账号登录
-                </Button>
+                    </Button>
+                    <Button disabled={false} onClick={() => handleProviderLogin("github")}
+                            variant="outline" size="lg" className="w-full relative">
+                        <FaGithub className="size-5 absolute top-2.5 left-2.5"/>
+                        使用 Github 账号登录
+                    </Button>
                 </div>
                 <p className="text-xs text-muted-foreground">还没有账户？
                     <span onClick={() => setType("register")}

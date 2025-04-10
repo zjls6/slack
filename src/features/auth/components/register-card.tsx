@@ -41,11 +41,12 @@ export const RegisterCard = ({setType}: RegisterCardProps) => {
                     }} variant="outline" size="lg" className="w-full relative">
                         <FcGoogle className="size-5 absolute top-2.5 left-2.5"/>
                         使用 Google 账号注册
-                    </Button><Button disabled={false} onClick={() => {
-                }} variant="outline" size="lg" className="w-full relative">
-                    <FaGithub className="size-5 absolute top-2.5 left-2.5"/>
-                    使用 Github 账号注册
-                </Button>
+                    </Button>
+                    <Button disabled={false} onClick={() => {
+                    }} variant="outline" size="lg" className="w-full relative">
+                        <FaGithub className="size-5 absolute top-2.5 left-2.5"/>
+                        使用 Github 账号注册
+                    </Button>
                 </div>
                 <p className="text-xs text-muted-foreground">已经注册过了？
                     <span onClick={() => {
