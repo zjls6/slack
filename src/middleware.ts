@@ -8,7 +8,10 @@ export default convexAuthNextjsMiddleware(async (request, {convexAuth}) => {
         return nextjsMiddlewareRedirect(request, "/auth");
     }
 
-    //TODO: 用户登录后重定向至 /auth
+    //用户登录后重定向至 /
+    if (isPublicPage(request) && (await convexAuth.isAuthenticated())) {
+        return nextjsMiddlewareRedirect(request, "/")
+    }
 });
 
 export const config = {
