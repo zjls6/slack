@@ -25,15 +25,15 @@ export const RegisterCard = ({setType}: RegisterCardProps) => {
     const onPasswordRegister = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        if (password!==confirmPassword) {
+        if (password !== confirmPassword) {
             setError("Passwords must match")
             return
         }
 
         setPending(true)
 
-        signIn("password",{email,password,flow:"register"}).catch(()=>{
-            setError("something went wrong")
+        signIn("password", {email, password, flow: "signUp"}).catch(() => {
+            setError("密码过于简单")
         }).finally(() => {
             setPending(false)
         })
