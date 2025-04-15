@@ -24,7 +24,7 @@ export const LoginCard = ({setType}: LoginCardProps) => {
     const onPasswordLogin = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         setPending(true)
-        signIn("password", {email, password, flow: "login"}).catch(() => {
+        signIn("password", {email, password, flow: "signIn"}).catch((error) => {
             setError("邮箱或密码不正确")
         }).finally(() => {
             setPending(false)
