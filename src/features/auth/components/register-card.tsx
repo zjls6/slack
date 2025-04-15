@@ -1,21 +1,22 @@
-import {LoginType} from "@/features/auth/types";
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
-import {Input} from "@/components/ui/input";
-import {Button} from "@/components/ui/button";
-import {Separator} from "@/components/ui/separator";
-import {FcGoogle} from "react-icons/fc";
-import {FaGithub} from "react-icons/fa";
-import React, {useState} from "react";
-import {TriangleAlert} from "lucide-react";
-import {useAuthActions} from "@convex-dev/auth/react";
+import { LoginType } from "@/features/auth/types";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { FcGoogle } from "react-icons/fc";
+import { FaGithub } from "react-icons/fa";
+import React, { useState } from "react";
+import { TriangleAlert } from "lucide-react";
+import { useAuthActions } from "@convex-dev/auth/react";
 
 interface RegisterCardProps {
     setType: (state: LoginType) => void;
 }
 
-export const RegisterCard = ({setType}: RegisterCardProps) => {
-    const {signIn} = useAuthActions();
+export const RegisterCard = ({ setType }: RegisterCardProps) => {
+    const { signIn } = useAuthActions();
 
+    const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
@@ -26,13 +27,13 @@ export const RegisterCard = ({setType}: RegisterCardProps) => {
         e.preventDefault()
 
         if (password !== confirmPassword) {
-            setError("Passwords must match")
+            setError("两次输入的密码不一致")
             return
         }
 
         setPending(true)
 
-        signIn("password", {email, password, flow: "signUp"}).catch(() => {
+        signIn("password", { name, email, password, flow: "signUp" }).catch(() => {
             setError("密码过于简单")
         }).finally(() => {
             setPending(false)
@@ -47,7 +48,7 @@ export const RegisterCard = ({setType}: RegisterCardProps) => {
     }
 
     return (
-        <Card className="w-full h-full p-8">
+        <Card className="w-full h-full p-8 gap-4">
             <CardHeader className="px-0 pt-0">
                 <CardTitle className="text-2xl">创建一个新的账号</CardTitle>
                 <CardDescription>使用你的邮箱或其他服务</CardDescription>
@@ -62,6 +63,9 @@ export const RegisterCard = ({setType}: RegisterCardProps) => {
             )}
             <CardContent className="space-y-5 px-0 pb-0">
                 <form onSubmit={onPasswordRegister} className="space-y-2.5">
+                    <Input disabled={pending} value={name} onChange={(e) => {
+                        setName(e.target.value)
+                    }} placeholder="昵称" required/>
                     <Input disabled={pending} value={email} onChange={(e) => {
                         setEmail(e.target.value)
                     }} placeholder="邮箱" type={"email"} required/>

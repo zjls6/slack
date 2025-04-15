@@ -1,20 +1,20 @@
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card"
-import {Input} from "@/components/ui/input";
-import {Button} from "@/components/ui/button";
-import {Separator} from "@/components/ui/separator";
-import {FcGoogle} from "react-icons/fc";
-import {FaGithub} from "react-icons/fa";
-import {LoginType} from "@/features/auth/types";
-import React, {useState} from "react";
-import {useAuthActions} from "@convex-dev/auth/react";
-import {TriangleAlert} from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { FcGoogle } from "react-icons/fc";
+import { FaGithub } from "react-icons/fa";
+import { LoginType } from "@/features/auth/types";
+import React, { useState } from "react";
+import { useAuthActions } from "@convex-dev/auth/react";
+import { TriangleAlert } from "lucide-react";
 
 interface LoginCardProps {
     setType: (state: LoginType) => void;
 }
 
-export const LoginCard = ({setType}: LoginCardProps) => {
-    const {signIn} = useAuthActions();
+export const LoginCard = ({ setType }: LoginCardProps) => {
+    const { signIn } = useAuthActions();
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -24,7 +24,7 @@ export const LoginCard = ({setType}: LoginCardProps) => {
     const onPasswordLogin = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         setPending(true)
-        signIn("password", {email, password, flow: "signIn"}).catch(() => {
+        signIn("password", { email, password, flow: "signIn" }).catch(() => {
             setError("邮箱或密码不正确")
         }).finally(() => {
             setPending(false)
