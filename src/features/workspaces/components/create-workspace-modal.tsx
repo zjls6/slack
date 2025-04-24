@@ -6,28 +6,40 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useCreateWorkspace } from "@/features/workspaces/api/use-create-workspace";
 import { router } from "next/client";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export const CreateWorkspaceModal = () => {
+    const router = useRouter();
+
     const [ open, setOpen ] = useCreateWorkspaceModal();
 
-    const { mutate } = useCreateWorkspace()
+    const [ name, setName ] = useState("")
+
+    const { mutate, isPending, isError, isSuccess, data, } = useCreateWorkspace()
 
     const handleClose = () => {
         setOpen(false);
-        //TODO: 清除表单
+        setName("")
     }
 
-    const handleSubmit =async () => {
-     const data = await   mutate({
-            name: "Workspace 1",
-        }, {
-            onSuccess(data) {
-            },
-            onError(error) {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
 
+        await mutate(
+            { name },
+            {
+                onSuccess(id) {
+                    console.log("创建工作区成功:", id);
+                    router.push(`/workspace/${id}`)
+                    handleClose()
+                },
+                onError(error) {
+                    console.error("创建工作区失败:", error);
+                }
             }
-        })
-    }
+        );
+    };
 
     return (
         <Dialog open={ open } onOpenChange={ handleClose }>
@@ -35,16 +47,14 @@ export const CreateWorkspaceModal = () => {
                 <DialogHeader>
                     <DialogTitle>创建工作区</DialogTitle>
                 </DialogHeader>
-                <form className="space-y-4">
-                    <Input value="" onChange={ () => {
-                    } } disabled={ false } required autoFocus minLength={ 3 }
-                           placeholder="新工作区的名称(例如：工作，学习，家庭等）"></Input>
+                <form onSubmit={ handleSubmit } className="space-y-4">
+                    <Input value={ name } onChange={ (e) => setName(e.target.value) }
+                           disabled={ isPending } required autoFocus minLength={ 2 }
+                           placeholder="新工作区的名称(例如：工作，学习，家庭，个人等）"></Input>
+                    <div className="flex justify-end">
+                        <Button disabled={ isPending }>创建</Button>
+                    </div>
                 </form>
-                <div className="flex justify-end">
-                    <Button disabled={ false }>
-                        创建
-                    </Button>
-                </div>
             </DialogContent>
         </Dialog>
     )

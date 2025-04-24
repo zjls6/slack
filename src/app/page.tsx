@@ -4,8 +4,11 @@ import { UserButton } from "@/features/auth/components/user-button";
 import { useGetWorkspaces } from "@/features/workspaces/api/use-get-workspaces";
 import { useEffect, useMemo } from "react";
 import { useCreateWorkspaceModal } from "@/features/workspaces/store/use-create-workspace-modal";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+    const router = useRouter();
+
     const [ open, setOpen ] = useCreateWorkspaceModal();
 
     const { data, isLoading } = useGetWorkspaces();
@@ -16,12 +19,13 @@ export default function Home() {
         if (isLoading) return
 
         if (workspaceId) {
-            console.log("重定向至工作区");
+            console.log("重定向至工作区", workspaceId);
+            router.replace(`/workspace/${ workspaceId }`)
         } else if (!open) {
             // console.log("打开创建工作区的对话框");
             setOpen(true)
         }
-    }, [ workspaceId, isLoading, open, setOpen ]);
+    }, [ workspaceId, isLoading, open, setOpen, router ]);
 
     return (
         <div>
