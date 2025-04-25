@@ -5,9 +5,9 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useCreateWorkspace } from "@/features/workspaces/api/use-create-workspace";
-import { router } from "next/client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export const CreateWorkspaceModal = () => {
     const router = useRouter();
@@ -16,7 +16,7 @@ export const CreateWorkspaceModal = () => {
 
     const [ name, setName ] = useState("")
 
-    const { mutate, isPending, isError, isSuccess, data, } = useCreateWorkspace()
+    const { mutate, isPending } = useCreateWorkspace()
 
     const handleClose = () => {
         setOpen(false);
@@ -31,7 +31,8 @@ export const CreateWorkspaceModal = () => {
             {
                 onSuccess(id) {
                     console.log("创建工作区成功:", id);
-                    router.push(`/workspace/${id}`)
+                    toast.success("创建工作区成功")
+                    router.push(`/workspace/${ id }`)
                     handleClose()
                 },
                 onError(error) {
