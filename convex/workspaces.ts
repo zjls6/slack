@@ -21,6 +21,12 @@ export const create = mutation({
             joinCode
         });
 
+        await ctx.db.insert("members", {
+            userId,
+            workspaceId,
+            role: "admin"
+        });
+
         return workspaceId
     }
 })
@@ -28,6 +34,11 @@ export const create = mutation({
 export const get = query({
     args: {},
     handler: async (ctx) => {
+        const userId = await getAuthUserId(ctx);
+        if (!userId) {
+            return []
+        }
+
         return await ctx.db.query("workspaces").collect()
     }
 })
