@@ -58,26 +58,4 @@ function Button({
     )
 }
 
-// 用来解决button中不能嵌套button的问题
-function ButtonDiv({
-                       className,
-                       variant,
-                       size,
-                       asChild = false,
-                       ...props
-                   }: React.ComponentProps<"div"> &
-    VariantProps<typeof buttonVariants> & {
-    asChild?: boolean
-}) {
-    const Comp = asChild ? Slot : "div"
-
-    return (
-        <Comp
-            data-slot="div"
-            className={ cn(buttonVariants({ variant, size, className })) }
-            { ...props }
-        />
-    )
-}
-
-export { Button,ButtonDiv, buttonVariants }
+export { Button, buttonVariants }

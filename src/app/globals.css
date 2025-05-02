@@ -5,6 +5,10 @@ html, body, :root {
     height: 100%;
 }
 
+body {
+    pointer-events: auto !important;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
