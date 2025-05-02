@@ -2,6 +2,13 @@ import { v } from "convex/values"
 import { mutation, query } from "./_generated/server";
 import { getAuthUserId } from "@convex-dev/auth/server";
 
+const generateCode = () => {
+    return Array.from(
+        { length: 6 },
+        () => "0123456789abcdefghijklmnopqrstuvwxyz"[Math.floor(Math.random() * 36)]
+    ).join("")
+}
+
 export const create = mutation({
     args: {
         name: v.string(),
@@ -13,7 +20,7 @@ export const create = mutation({
         }
 
         //TODO: 创建一个合适的方法
-        const joinCode = "123456";
+        const joinCode = generateCode()
 
         const workspaceId = await ctx.db.insert("workspaces", {
             name: args.name,
@@ -71,9 +78,10 @@ export const getById = query({
 
         const member =
             await ctx.db.query("members")
-                .withIndex("by_workspace_id_user_id", q => q.eq("workspaceId", args.id).eq("userId", userId)).unique()
+                .withIndex("by_workspace_id_user_id", q =>
+                    q.eq("workspaceId", args.id).eq("userId", userId)).unique()
 
-        if (!member){
+        if (!member) {
             return null
         }
         return await ctx.db.get(args.id)
