@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Doc } from "../../../../convex/_generated/dataModel";
 import { ChevronDown, ListFilter, SquarePen } from "lucide-react";
 import { Hint } from "@/components/hint";
-import { PreferencesModal } from "@/app/workspace/[workspaceId]/preferences";
+import { PreferencesModal } from "@/app/workspace/[workspaceId]/preferences-modal";
 import { useState } from "react";
 
 interface WorkspaceHeaderProps {

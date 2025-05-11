@@ -50,8 +50,8 @@ export const CreateWorkspaceModal = () => {
                 </DialogHeader>
                 <form onSubmit={ handleSubmit } className="space-y-4">
                     <Input value={ name } onChange={ (e) => setName(e.target.value) }
-                           disabled={ isPending } required autoFocus minLength={ 2 }
-                           placeholder="新工作区的名称(例如：工作，学习，家庭，个人等）"></Input>
+                           disabled={ isPending } required autoFocus minLength={ 2 } maxLength={80}
+                           placeholder="新工作区的名称（例如：工作，学习，家庭，个人等）"></Input>
                     <div className="flex justify-end">
                         <Button disabled={ isPending }>创建</Button>
                     </div>
