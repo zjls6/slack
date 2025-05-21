@@ -33,6 +33,11 @@ export const create = mutation({
             role: "admin"
         });
 
+        await ctx.db.insert("channels", {
+            name: "全局频道",
+            workspaceId
+        })
+
         return workspaceId
     }
 })
