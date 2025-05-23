@@ -6,6 +6,8 @@ import { WorkspaceHeader } from "@/app/workspace/[workspaceId]/workspace-header"
 import { SidebarItem } from "@/app/workspace/[workspaceId]/sidebar-item";
 import { UseGetChannels } from "@/features/channels/api/use-get-channels";
 import { WorkspaceSection } from "@/app/workspace/[workspaceId]/workspace-section";
+import { useGetMembers } from "@/features/members/api/use-get-members";
+import { UserItem } from "@/app/workspace/[workspaceId]/user-item";
 
 export const WorkspaceSidebar = () => {
     const workspaceId = useWorkspaceId();
@@ -13,6 +15,7 @@ export const WorkspaceSidebar = () => {
     const { data: member, isLoading: memberLoading } = useCurrentMember({ workspaceId });
     const { data: workspace, isLoading: workspaceLoading } = useGetWorkspace({ id: workspaceId });
     const { data: channels, isLoading: channelsLoading } = UseGetChannels({ workspaceId });
+    const { data: members, isLoading: membersLoading } = useGetMembers({ workspaceId });
 
     if (workspaceLoading || memberLoading) {
         return (
@@ -39,11 +42,15 @@ export const WorkspaceSidebar = () => {
                 <SidebarItem label="Drafts&Sent" icon={ SendHorizontal } id="drafts"/>
             </div>
 
-            <WorkspaceSection label="频道" hint="新频道" onNew={()=>{}}>
+            <WorkspaceSection label="频道" hint="新频道" onNew={ () => {
+            } }>
                 { channels?.map((item) => (
                     <SidebarItem icon={ HashIcon } id={ item._id } label={ item.name } key={ item._id }/>
                 )) }
             </WorkspaceSection>
+            {members?.map(item=>(
+                <UserItem key={item._id} id={item.user._id} label={item.user.name} image={item.user.image}/>
+            ))}
         </div>
     )
 }
