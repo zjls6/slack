@@ -48,9 +48,12 @@ export const WorkspaceSidebar = () => {
                     <SidebarItem icon={ HashIcon } id={ item._id } label={ item.name } key={ item._id }/>
                 )) }
             </WorkspaceSection>
-            {members?.map(item=>(
-                <UserItem key={item._id} id={item.user._id} label={item.user.name} image={item.user.image}/>
-            ))}
+            <WorkspaceSection  label="私聊" hint="新私聊" onNew={ () => {
+            } }>
+                { members?.map(item => (
+                    <UserItem key={ item._id } id={ item._id } label={ item.user.name } image={ item.user.image }/>
+                )) }
+            </WorkspaceSection>
         </div>
     )
 }
