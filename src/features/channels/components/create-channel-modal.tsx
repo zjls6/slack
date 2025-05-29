@@ -1,6 +1,5 @@
 "use client"
 
-import { useCreateWorkspaceModal } from "@/features/workspaces/store/use-create-workspace-modal";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -8,15 +7,21 @@ import { useCreateWorkspace } from "@/features/workspaces/api/use-create-workspa
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { useCreateChannelModal } from "@/features/channels/store/use-create-channel-modal";
 
-export const CreateWorkspaceModal = () => {
+export const CreateChannelModal = () => {
     const router = useRouter();
 
-    const [ open, setOpen ] = useCreateWorkspaceModal();
+    const [ open, setOpen ] = useCreateChannelModal();
 
     const [ name, setName ] = useState("")
 
     const { mutate, isPending } = useCreateWorkspace()
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value.replace(/\s+/g, "-").toLowerCase();
+        setName(value)
+    }
 
     const handleClose = () => {
         setOpen(false);
@@ -46,12 +51,12 @@ export const CreateWorkspaceModal = () => {
         <Dialog open={ open } onOpenChange={ handleClose }>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>创建工作区</DialogTitle>
+                    <DialogTitle>新建频道</DialogTitle>
                 </DialogHeader>
                 <form onSubmit={ handleSubmit } className="space-y-4">
-                    <Input value={ name } onChange={ (e) => setName(e.target.value) }
+                    <Input value={ name } onChange={ handleChange }
                            disabled={ isPending } required autoFocus minLength={ 2 } maxLength={ 80 }
-                           placeholder="新工作区的名称（例如：工作，学习，家庭，个人等）"></Input>
+                           placeholder="新频道的名称（例如：规则，聊天等）仅小写字母，自动替换空格为-"></Input>
                     <div className="flex justify-end">
                         <Button disabled={ isPending }>创建</Button>
                     </div>

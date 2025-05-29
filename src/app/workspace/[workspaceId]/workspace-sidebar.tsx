@@ -8,14 +8,17 @@ import { UseGetChannels } from "@/features/channels/api/use-get-channels";
 import { WorkspaceSection } from "@/app/workspace/[workspaceId]/workspace-section";
 import { useGetMembers } from "@/features/members/api/use-get-members";
 import { UserItem } from "@/app/workspace/[workspaceId]/user-item";
+import { useCreateChannelModal } from "@/features/channels/store/use-create-channel-modal";
 
 export const WorkspaceSidebar = () => {
     const workspaceId = useWorkspaceId();
 
+    const [ open, setOpen ] = useCreateChannelModal();
+
     const { data: member, isLoading: memberLoading } = useCurrentMember({ workspaceId });
     const { data: workspace, isLoading: workspaceLoading } = useGetWorkspace({ id: workspaceId });
-    const { data: channels, isLoading: channelsLoading } = UseGetChannels({ workspaceId });
-    const { data: members, isLoading: membersLoading } = useGetMembers({ workspaceId });
+    const { data: channels } = UseGetChannels({ workspaceId });
+    const { data: members } = useGetMembers({ workspaceId });
 
     if (workspaceLoading || memberLoading) {
         return (
@@ -42,13 +45,13 @@ export const WorkspaceSidebar = () => {
                 <SidebarItem label="Drafts&Sent" icon={ SendHorizontal } id="drafts"/>
             </div>
 
-            <WorkspaceSection label="频道" hint="新频道" onNew={ () => {
-            } }>
+            <WorkspaceSection label="频道" hint="新频道"
+                              onNew={ member.role === "admin" ? () => setOpen(true) : undefined }>
                 { channels?.map((item) => (
                     <SidebarItem icon={ HashIcon } id={ item._id } label={ item.name } key={ item._id }/>
                 )) }
             </WorkspaceSection>
-            <WorkspaceSection  label="私聊" hint="新私聊" onNew={ () => {
+            <WorkspaceSection label="私聊" hint="新私聊" onNew={ () => {
             } }>
                 { members?.map(item => (
                     <UserItem key={ item._id } id={ item._id } label={ item.user.name } image={ item.user.image }/>
