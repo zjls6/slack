@@ -57,7 +57,7 @@ export const get = query({
 
         const workspaceIds = members.map(member => member.workspaceId);
 
-        const workspaces:any[] = []
+        const workspaces: any[] = []
 
         for (const workspaceId of workspaceIds) {
             const workspace = await ctx.db.get(workspaceId);

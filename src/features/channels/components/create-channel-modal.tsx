@@ -3,21 +3,21 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useCreateWorkspace } from "@/features/workspaces/api/use-create-workspace";
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useCreateChannelModal } from "@/features/channels/store/use-create-channel-modal";
 import { useCreateChannel } from "@/features/channels/api/use-create-channel";
+import { useWorkspaceId } from "@/hooks/use-workspace-id";
 
 export const CreateChannelModal = () => {
-    const router = useRouter();
+    // const router = useRouter();
+
+    const workspaceId = useWorkspaceId();
 
     const [ open, setOpen ] = useCreateChannelModal();
+    const { mutate, isPending } = useCreateChannel()
 
     const [ name, setName ] = useState("")
-
-    const { mutate, isPending } = useCreateChannel()
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const parsedName = e.target.value.replace(/\s+/g, "-").toLowerCase();
@@ -33,12 +33,13 @@ export const CreateChannelModal = () => {
         e.preventDefault();
 
         await mutate(
-            { name },
+            { name, workspaceId },
             {
                 onSuccess(id) {
-                    console.log("创建工作区成功:", id);
-                    toast.success("创建工作区成功")
-                    router.push(`/workspace/${ id }`)
+                    console.log("创建频道成功:", id);
+                    toast.success("创建频道成功")
+                    //TODO: 重定向到该频道
+                    // router.push(`/channel/${ id }`)
                     handleClose()
                 },
                 onError(error) {
