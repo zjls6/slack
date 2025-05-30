@@ -8,6 +8,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useCreateChannelModal } from "@/features/channels/store/use-create-channel-modal";
+import { useCreateChannel } from "@/features/channels/api/use-create-channel";
 
 export const CreateChannelModal = () => {
     const router = useRouter();
@@ -16,11 +17,11 @@ export const CreateChannelModal = () => {
 
     const [ name, setName ] = useState("")
 
-    const { mutate, isPending } = useCreateWorkspace()
+    const { mutate, isPending } = useCreateChannel()
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value.replace(/\s+/g, "-").toLowerCase();
-        setName(value)
+        const parsedName = e.target.value.replace(/\s+/g, "-").toLowerCase();
+        setName(parsedName)
     }
 
     const handleClose = () => {

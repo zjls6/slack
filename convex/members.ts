@@ -26,7 +26,7 @@ export const get = query({
                 .withIndex("by_workspace_id", q =>
                     q.eq("workspaceId", args.workspaceId)).collect()
 
-            const members = []
+            const members:any[] = []
 
             for (const member of data) {
                 const user = await populateUser(ctx, member.userId);

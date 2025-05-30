@@ -13,7 +13,7 @@ import { useCreateChannelModal } from "@/features/channels/store/use-create-chan
 export const WorkspaceSidebar = () => {
     const workspaceId = useWorkspaceId();
 
-    const [ open, setOpen ] = useCreateChannelModal();
+    const [ , setOpen ] = useCreateChannelModal();
 
     const { data: member, isLoading: memberLoading } = useCurrentMember({ workspaceId });
     const { data: workspace, isLoading: workspaceLoading } = useGetWorkspace({ id: workspaceId });
