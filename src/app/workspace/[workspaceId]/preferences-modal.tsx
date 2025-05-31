@@ -27,7 +27,7 @@ interface PreferencesModalProps {
 export const PreferencesModal = ({ open, setOpen, initialValue }: PreferencesModalProps) => {
     const router = useRouter();
     const workspaceId = useWorkspaceId();
-    const [ ConfirmDialog, confirm] = useConfirm(
+    const [ ConfirmDialog, confirm ] = useConfirm(
         "你确定吗？",
         "该操作不可逆。"
     );

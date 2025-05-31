@@ -43,7 +43,7 @@ export const CreateChannelModal = () => {
                     handleClose()
                 },
                 onError(error) {
-                    console.error("创建工作区失败:", error);
+                    console.error("创建频道失败:", error);
                 }
             }
         );
