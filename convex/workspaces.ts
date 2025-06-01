@@ -9,6 +9,24 @@ const generateCode = () => {
     ).join("")
 }
 
+export const newJoinCode = mutation({
+    args: {
+        workspaceId: v.id("workspaces"),
+    },
+    handler: async (ctx, args) => {
+        const userId = await getAuthUserId(ctx);
+        if (!userId) {
+            throw new Error('Unauthorized');
+        }
+
+        const joinCode = generateCode()
+
+        await ctx.db.patch(args.workspaceId, { joinCode });
+
+        return args.workspaceId
+    }
+})
+
 export const create = mutation({
     args: {
         name: v.string(),
