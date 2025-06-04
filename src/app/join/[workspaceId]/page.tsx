@@ -12,12 +12,12 @@ const JoinPage = () => {
                     <h1 className="text-2xl font-bold">加入工作区</h1>
                     <p className="text-md text-muted-foreground">输入邀请码来加入工作区</p>
                 </div>
-                <VerificationInput length={6} autoFocus classNames={ {
-                    container: "flex gap-x-2",
-                    character: "uppercase h-auto rounded-md border border-gray-300 flex items-center justify-center font-medium text-gray-500 text-sm",
-                    characterInactive: "bg-muted",
-                    characterSelected: "bg-white text-black",
-                    characterFilled: "bg-white text-black",
+                <VerificationInput length={ 6 } autoFocus classNames={ {
+                    container: "verification-input-container",
+                    character: "verification-input-character",
+                    characterInactive: "verification-input-character-inactive",
+                    characterSelected: "verification-input-character-selected",
+                    characterFilled: "verification-input-character-filled",
                 } }/>
             </div>
         </div>
