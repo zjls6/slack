@@ -24,7 +24,7 @@ const JoinPage = () => {
 
     useEffect(() => {
         if (isMember) {
-            toast.success("您已加入该工作区")
+            toast.info("您已加入该工作区")
             router.push(`/workspace/${ workspaceId }`)
         }
     }, [ isMember, workspaceId, router ]);
@@ -47,6 +47,17 @@ const JoinPage = () => {
         return (
             <div className="h-full flex items-center justify-center">
                 <Loader className="size-6 animate-spin text-muted-foreground"/>
+            </div>
+        )
+    }
+
+    if (isMember) {
+        return (
+            <div className="h-full flex items-center justify-center flex-col gap-y-4">
+                <div className="flex flex-col gap-y-2 items-center justify-center">
+                    <h1 className="text-2xl font-bold">您已加入该工作区</h1>
+                    <p className="text-md text-muted-foreground">即将重定向到该工作区</p>
+                </div>
             </div>
         )
     }
