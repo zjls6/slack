@@ -27,8 +27,7 @@ export const join = mutation({
         }
 
         if (workspace.joinCode !== args.joinCode.toLowerCase()) {
-            // throw new Error('Invalid join code');
-            return null
+            throw new Error('Invalid join code');
         }
 
         const existingMember =
@@ -154,6 +153,9 @@ export const getInfoById = query({
                     q.eq("workspaceId", args.id).eq("userId", userId)).unique()
 
         const workspace = await ctx.db.get(args.id)
+        if (!workspace) {
+            throw new Error('Workspace not found');
+        }
 
         return {
             name: workspace?.name,
