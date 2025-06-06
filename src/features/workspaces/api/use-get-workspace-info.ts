@@ -12,7 +12,7 @@ export const useGetWorkspaceInfo = ({ id }: UseGetWorkspaceInfoProps) => {
         const isLoading = data === undefined
         return { data, isLoading }
     } catch (error) {
-        // console.log(error)
+        console.log(error)
         return { data: null, isLoading: false }
     }
 }
