@@ -24,7 +24,7 @@ const JoinPage = () => {
 
     useEffect(() => {
         if (isMember) {
-            toast.info("您已加入该工作区")
+            // toast.info("您已加入该工作区")
             router.push(`/workspace/${ workspaceId }`)
         }
     }, [ isMember, workspaceId, router ]);
